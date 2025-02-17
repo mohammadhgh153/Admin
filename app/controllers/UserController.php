@@ -1,6 +1,5 @@
 <?php
 require_once __DIR__ . "/../models/User.php";
-session_start();
 
 class UserController {
     public function dashboard() {
