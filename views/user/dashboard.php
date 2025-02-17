@@ -40,11 +40,14 @@
             margin-top: 10px;
         }
 
-        table, th, td {
+        table,
+        th,
+        td {
             border: 1px solid #ddd;
         }
 
-        th, td {
+        th,
+        td {
             padding: 10px;
             text-align: center;
         }
@@ -88,6 +91,9 @@
                 <tr>
                     <td><?= htmlspecialchars($user["name"]) ?></td>
                     <td><?= htmlspecialchars($user["email"]) ?></td>
+                    <td>
+                    <a href="/edit/<?= $user['id'] ?>">ویرایش</a>
+                    </td>
                 </tr>
             <?php endforeach; ?>
         </table>

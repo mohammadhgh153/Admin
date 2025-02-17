@@ -28,4 +28,17 @@ class User
         $stmt = $this->pdo->query("SELECT * FROM users");
         return $stmt->fetchAll();
     }
+
+    public function getUserById($id)
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM users WHERE id = ?");
+        $stmt->execute([$id]);
+        return $stmt->fetch();
+    }
+
+    public function updateUser($id, $name, $email)
+    {
+        $stmt = $this->pdo->prepare("UPDATE users SET name = ?, email = ? WHERE id = ?");
+        return $stmt->execute([$name, $email, $id]);
+    }
 }

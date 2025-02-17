@@ -1,8 +1,10 @@
 <?php
 require_once __DIR__ . "/../models/User.php";
 
-class UserController {
-    public function dashboard() {
+class UserController
+{
+    public function dashboard()
+    {
         if (!isset($_SESSION["user_id"])) {
             header("Location: /login");
             exit;
@@ -13,5 +15,33 @@ class UserController {
 
         require_once __DIR__ . "/../../views/user/dashboard.php";
     }
+
+    public function edit($id)
+    {
+        // بررسی وجود کاربر
+        $userModel = new User();
+        $user = $userModel->getUserById($id);
+
+        if (!$user) {
+            echo "کاربر پیدا نشد!";
+            exit;
+        }
+
+        // بررسی ارسال فرم
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            $name = $_POST["name"];
+            $email = $_POST["email"];
+
+            // به‌روزرسانی اطلاعات کاربر
+            if ($userModel->updateUser($id, $name, $email)) {
+                header("Location: /dashboard");
+                exit;
+            } else {
+                echo "خطا در به‌روزرسانی اطلاعات!";
+            }
+        }
+
+        // ارسال داده‌ها به ویو
+        require_once __DIR__ . "/../../views/user/edit.php";
+    }
 }
-?>
