@@ -3,7 +3,7 @@ require_once __DIR__ . "/../models/User.php";
 
 class UserController
 {
-    public function dashboard()
+    public function dashboard($search = '')
     {
         if (!isset($_SESSION["user_id"])) {
             header("Location: /login");
@@ -11,9 +11,16 @@ class UserController
         }
 
         $userModel = new User();
-        $users = $userModel->getAllUsers();
+        $search = isset($_GET['search']) ? $_GET['search'] : '';  // دریافت پارامتر جستجو از URL
 
-        require_once __DIR__ . "/../../views/user/dashboard.php";
+        // بررسی اگر جستجو انجام شده باشد
+        if ($search) {
+            $users = $userModel->searchUsers($search);
+        } else {
+            $users = $userModel->getAllUsers();  // اگر جستجو انجام نشده باشد، همه کاربران نمایش داده می‌شوند
+        }
+
+        require_once __DIR__ . "/../../views/user/dashboard.php";  // نمایش ویو
     }
 
     public function edit($id)

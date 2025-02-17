@@ -75,6 +75,34 @@
         .logout:hover {
             background-color: #c82333;
         }
+
+        /* استایل برای تکست باکس جستجو */
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        /* استایل برای دکمه جستجو */
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
     </style>
 </head>
 
@@ -82,20 +110,32 @@
 
     <div class="container">
         <h2>لیست کاربران</h2>
+        <form method="GET" action="/dashboard" style="margin-bottom: 20px;">
+            <input type="text" name="search" placeholder="جستجو بر اساس نام یا ایمیل" value="<?= isset($_GET['search']) ? htmlspecialchars($_GET['search']) : '' ?>" required>
+            <button type="submit">جستجو</button>
+        </form>
+
         <table>
             <tr>
                 <th>نام</th>
                 <th>ایمیل</th>
             </tr>
-            <?php foreach ($users as $user): ?>
+
+            <?php if (empty($users)): ?>
                 <tr>
-                    <td><?= htmlspecialchars($user["name"]) ?></td>
-                    <td><?= htmlspecialchars($user["email"]) ?></td>
-                    <td>
-                    <a href="/edit/<?= $user['id'] ?>">ویرایش</a>
-                    </td>
+                    <td colspan="2">کاربر یا ایمیل مورد نظر یافت نشد!</td>
                 </tr>
-            <?php endforeach; ?>
+            <?php else: ?>
+                <?php foreach ($users as $user): ?>
+                    <tr>
+                        <td><?= htmlspecialchars($user["name"]) ?></td>
+                        <td><?= htmlspecialchars($user["email"]) ?></td>
+                        <td>
+                            <a href="/edit/<?= $user['id'] ?>">ویرایش</a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php endif; ?>
         </table>
 
         <a href="/logout" class="logout">خروج</a>

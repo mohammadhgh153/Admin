@@ -19,10 +19,15 @@ switch ($request) {
         $authController->logout();
         break;
     case '/dashboard':
-        $userController->dashboard();
+        if (isset($_GET['search'])) {
+            $search = $_GET['search'];
+            $userController->dashboard($search);
+        } else {
+            $userController->dashboard();  
+        }
         break;
     case (preg_match('/^\/edit\/\d+$/', $request) ? $request : null):
-        $id = explode('/', $request)[2];  
+        $id = explode('/', $request)[2];
         $userController->edit($id);
         break;
     default:

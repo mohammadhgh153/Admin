@@ -41,4 +41,12 @@ class User
         $stmt = $this->pdo->prepare("UPDATE users SET name = ?, email = ? WHERE id = ?");
         return $stmt->execute([$name, $email, $id]);
     }
+
+    public function searchUsers($search)
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM users WHERE name LIKE ? OR email LIKE ?");
+        $searchTerm = "%" . $search . "%"; 
+        $stmt->execute([$searchTerm, $searchTerm]);
+        return $stmt->fetchAll();
+    }
 }
