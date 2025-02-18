@@ -74,9 +74,18 @@
 
     <div class="container">
         <h2>ویرایش اطلاعات کاربر</h2>
-        <form method="POST">
+        <form method="POST" enctype="multipart/form-data">
             <input type="text" name="name" value="<?= htmlspecialchars($user['name']) ?>" required><br>
             <input type="email" name="email" value="<?= htmlspecialchars($user['email']) ?>" required><br>
+
+            <input type="file" name="image"><br>
+            <?php if ($user['image']): ?>
+                <div>
+                    <p>تصویر قبلی:</p>
+                    <img src="/uploads/<?= htmlspecialchars($user['image']) ?>" alt="تصویر کاربر" width="50" height="50">
+                </div>
+            <?php endif; ?>
+
             <button type="submit">ذخیره تغییرات</button>
         </form>
     </div>

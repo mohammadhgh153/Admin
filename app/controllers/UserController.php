@@ -11,21 +11,19 @@ class UserController
         }
 
         $userModel = new User();
-        $search = isset($_GET['search']) ? $_GET['search'] : '';  // دریافت پارامتر جستجو از URL
+        $search = isset($_GET['search']) ? $_GET['search'] : '';  
 
-        // بررسی اگر جستجو انجام شده باشد
         if ($search) {
             $users = $userModel->searchUsers($search);
         } else {
-            $users = $userModel->getAllUsers();  // اگر جستجو انجام نشده باشد، همه کاربران نمایش داده می‌شوند
+            $users = $userModel->getAllUsers();  
         }
 
-        require_once __DIR__ . "/../../views/user/dashboard.php";  // نمایش ویو
+        require_once __DIR__ . "/../../views/user/dashboard.php"; 
     }
 
     public function edit($id)
     {
-        // بررسی وجود کاربر
         $userModel = new User();
         $user = $userModel->getUserById($id);
 
@@ -34,12 +32,10 @@ class UserController
             exit;
         }
 
-        // بررسی ارسال فرم
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $name = $_POST["name"];
             $email = $_POST["email"];
 
-            // به‌روزرسانی اطلاعات کاربر
             if ($userModel->updateUser($id, $name, $email)) {
                 header("Location: /dashboard");
                 exit;
@@ -48,7 +44,6 @@ class UserController
             }
         }
 
-        // ارسال داده‌ها به ویو
         require_once __DIR__ . "/../../views/user/edit.php";
     }
 }

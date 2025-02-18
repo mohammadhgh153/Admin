@@ -27,7 +27,7 @@
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             text-align: center;
-            width: 400px;
+            width: 100%;
         }
 
         h2 {
@@ -76,7 +76,6 @@
             background-color: #c82333;
         }
 
-        /* استایل برای تکست باکس جستجو */
         input[type="text"] {
             width: 100%;
             padding: 10px;
@@ -87,7 +86,6 @@
             box-sizing: border-box;
         }
 
-        /* استایل برای دکمه جستجو */
         button {
             padding: 10px 20px;
             background-color: #007bff;
@@ -119,17 +117,25 @@
             <tr>
                 <th>نام</th>
                 <th>ایمیل</th>
+                <th>تصویر</th>
             </tr>
 
             <?php if (empty($users)): ?>
                 <tr>
-                    <td colspan="2">کاربر یا ایمیل مورد نظر یافت نشد!</td>
+                    <td colspan="3">کاربر یا ایمیل مورد نظر یافت نشد!</td>
                 </tr>
             <?php else: ?>
                 <?php foreach ($users as $user): ?>
                     <tr>
                         <td><?= htmlspecialchars($user["name"]) ?></td>
                         <td><?= htmlspecialchars($user["email"]) ?></td>
+                        <td>
+                            <?php if ($user['image']): ?>
+                                <img src="/uploads/<?= htmlspecialchars($user['image']) ?>" alt="تصویر کاربر" width="50" height="50">
+                            <?php else: ?>
+                                <span>بدون تصویر</span>
+                            <?php endif; ?>
+                        </td>
                         <td>
                             <a href="/edit/<?= $user['id'] ?>">ویرایش</a>
                         </td>

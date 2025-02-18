@@ -36,11 +36,20 @@ class User
         return $stmt->fetch();
     }
 
-    public function updateUser($id, $name, $email)
-    {
-        $stmt = $this->pdo->prepare("UPDATE users SET name = ?, email = ? WHERE id = ?");
-        return $stmt->execute([$name, $email, $id]);
+    public function updateUser($id, $name, $email, $image = null)
+{
+    $imagePath = null;
+
+    // اگر تصویری انتخاب شده است
+    if ($image && $image['error'] === UPLOAD_ERR_OK) {
+        $imagePath = 'uploads/' . basename($image['name']);
+        move_uploaded_file($image['tmp_name'], __DIR__ . "/../../public/" . $imagePath);
     }
+
+    $stmt = $this->pdo->prepare("UPDATE users SET name = ?, email = ?, image = ? WHERE id = ?");
+    return $stmt->execute([$name, $email, $imagePath ? $imagePath : null, $id]);
+}
+
 
     public function searchUsers($search)
     {
