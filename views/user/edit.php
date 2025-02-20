@@ -79,10 +79,10 @@
             <input type="email" name="email" value="<?= htmlspecialchars($user['email']) ?>" required><br>
 
             <input type="file" name="image"><br>
-            <?php if ($user['image']): ?>
+            <?php if (!empty($user['image'])): ?>
                 <div>
-                    <p>تصویر قبلی:</p>
-                    <img src="/uploads/<?= htmlspecialchars($user['image']) ?>" alt="تصویر کاربر" width="50" height="50">
+                    <p>تصویر فعلی:</p>
+                    <img src="/<?= htmlspecialchars($user['image']) ?>" alt="تصویر کاربر" width="50" height="50">
                 </div>
             <?php endif; ?>
 

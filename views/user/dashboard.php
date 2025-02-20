@@ -100,7 +100,6 @@
         button:hover {
             background-color: #0056b3;
         }
-
     </style>
 </head>
 
@@ -130,8 +129,8 @@
                         <td><?= htmlspecialchars($user["name"]) ?></td>
                         <td><?= htmlspecialchars($user["email"]) ?></td>
                         <td>
-                            <?php if ($user['image']): ?>
-                                <img src="/uploads/<?= htmlspecialchars($user['image']) ?>" alt="تصویر کاربر" width="50" height="50">
+                            <?php if (!empty($user['image'])): ?>
+                                <img src="/<?= htmlspecialchars($user['image']) ?>" alt="تصویر کاربر" width="50" height="50">
                             <?php else: ?>
                                 <span>بدون تصویر</span>
                             <?php endif; ?>

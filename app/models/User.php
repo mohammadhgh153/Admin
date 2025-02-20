@@ -37,24 +37,34 @@ class User
     }
 
     public function updateUser($id, $name, $email, $image = null)
-{
-    $imagePath = null;
-
-    // اگر تصویری انتخاب شده است
-    if ($image && $image['error'] === UPLOAD_ERR_OK) {
-        $imagePath = 'uploads/' . basename($image['name']);
-        move_uploaded_file($image['tmp_name'], __DIR__ . "/../../public/" . $imagePath);
+    {
+        $imagePath = null;
+    
+        // دریافت اطلاعات کاربر فعلی
+        $stmt = $this->pdo->prepare("SELECT image FROM users WHERE id = ?");
+        $stmt->execute([$id]);
+        $currentUser = $stmt->fetch(PDO::FETCH_ASSOC);
+        $currentImage = $currentUser['image'];
+    
+        // اگر تصویری جدید انتخاب شده است
+        if ($image && $image['error'] === UPLOAD_ERR_OK) {
+            $imagePath = 'uploads/' . time() . '_' . basename($image['name']);
+            move_uploaded_file($image['tmp_name'], __DIR__ . "/../../public/" . $imagePath);
+        } else {
+            // اگر تصویر جدید انتخاب نشده، همان تصویر قبلی را نگه دار
+            $imagePath = $currentImage;
+        }
+    
+        $stmt = $this->pdo->prepare("UPDATE users SET name = ?, email = ?, image = ? WHERE id = ?");
+        return $stmt->execute([$name, $email, $imagePath, $id]);
     }
-
-    $stmt = $this->pdo->prepare("UPDATE users SET name = ?, email = ?, image = ? WHERE id = ?");
-    return $stmt->execute([$name, $email, $imagePath ? $imagePath : null, $id]);
-}
+    
 
 
     public function searchUsers($search)
     {
         $stmt = $this->pdo->prepare("SELECT * FROM users WHERE name LIKE ? OR email LIKE ?");
-        $searchTerm = "%" . $search . "%"; 
+        $searchTerm = "%" . $search . "%";
         $stmt->execute([$searchTerm, $searchTerm]);
         return $stmt->fetchAll();
     }
