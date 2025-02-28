@@ -80,7 +80,7 @@
             <input type="password" name="password" placeholder="رمز عبور" required><br>
             <button type="submit">ثبت‌نام</button>
         </form>
-        <a href="/login" class="link">ورود</a>
+        <a href="/" class="link">ورود</a>
     </div>
 
 </body>

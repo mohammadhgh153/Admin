@@ -12,7 +12,7 @@ switch ($request) {
     case '/register':
         $authController->register();
         break;
-    case '/login':
+    case '/':
         $authController->login();
         break;
     case '/logout':
