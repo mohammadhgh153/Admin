@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/js/jquery-3.7.1.js"></script>
     <title>داشبورد</title>
     <style>
         * {
@@ -107,10 +108,49 @@
 
     <div class="container">
         <h2>لیست کاربران</h2>
-        <form method="GET" action="/dashboard" style="margin-bottom: 20px;">
-            <input type="text" name="search" placeholder="جستجو بر اساس نام یا ایمیل" value="<?= isset($_GET['search']) ? htmlspecialchars($_GET['search']) : '' ?>" required>
-            <button type="submit">جستجو</button>
+        <form id="searchForm" method="GET" action="/dashboard" style="margin-bottom: 20px;">
+            <input type="text" id="live_search" name="search" placeholder="جستجو بر اساس نام یا ایمیل">
         </form>
+
+
+        <div id="searchresult"></div>
+        <script>
+    $(document).ready(function() {
+        $("#searchForm").submit(function(event) {
+            event.preventDefault();   
+        });
+
+        $("#live_search").keyup(function(event) {
+            var input = $(this).val();
+
+            if (event.keyCode === 13) {      
+                event.preventDefault(); 
+            }
+
+            if (input != "") {
+                $.ajax({
+                    url: "/ajax/livesearch.php",
+                    method: "POST",
+                    data: {
+                        input: input
+                    },
+                    success: function(data) {
+                        $("#searchresult").html(data);
+                        $("#searchresult").css("display", "block");
+                    }
+                });
+            } else {
+                $("#searchresult").css("display", "none");
+            }
+        });
+    });
+</script>
+
+
+
+
+
+
 
         <table>
             <tr>
@@ -146,6 +186,13 @@
         <a href="/logout" class="logout">خروج</a>
     </div>
 
+
+
 </body>
+
+
+
+
+
 
 </html>

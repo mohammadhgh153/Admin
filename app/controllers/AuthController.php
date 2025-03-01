@@ -13,7 +13,7 @@ class AuthController
 
             $userModel = new User();
             if ($userModel->createUser($name, $email, $password)) {
-                header("Location: /login");
+                header("Location: /");
                 exit;
             } else {
                 echo "خطایی رخ داد!";
@@ -46,7 +46,7 @@ class AuthController
     public function logout()
     {
         session_destroy();
-        header("Location: /login");
+        header("Location: /");
         exit;
     }
 }

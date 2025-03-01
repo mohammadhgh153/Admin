@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/public/js/jquery-3.7.1.min.map"></script>
     <title>ورود</title>
     <style>
         * {
@@ -79,6 +80,6 @@
         </form>
         <a href="/register" class="link">ثبت‌نام</a>
     </div>
-
+    <script src="/js/jquery-3.7.1.js"></script>
 </body>
 </html>

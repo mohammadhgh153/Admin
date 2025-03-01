@@ -20,10 +20,12 @@ switch ($request) {
         break;
     case '/dashboard':
         if (isset($_GET['search'])) {
+            $search = isset($_GET['search']) ? $_GET['search'] : '';
             $search = $_GET['search'];
+            echo 'Search: ' . $search;
             $userController->dashboard($search);
         } else {
-            $userController->dashboard();  
+            $userController->dashboard();
         }
         break;
     case (preg_match('/^\/edit\/\d+$/', $request) ? $request : null):
